@@ -108,7 +108,7 @@ namespace LethalPostersCreator
         {
             if (fileNames.Contains("") || fileNames.Contains(null) || fileNames.Length != 5)
             {
-                MessageBox.Show("Please select 5 images.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select 5 images.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LethalPostersCreator.Windows;
 
 namespace LethalPostersCreator
 {
@@ -51,6 +53,7 @@ namespace LethalPostersCreator
             }
             label1.Text = "Selected mod: " + modPath;
             postersLauncher.Enabled = true;
+            tipsLauncher.Enabled = true;
             return;
         }
 
@@ -73,6 +76,7 @@ namespace LethalPostersCreator
             }
             label1.Text = "Selected mod: " + modPath;
             postersLauncher.Enabled = true;
+            tipsLauncher.Enabled = true;
             return;
         }
     }
