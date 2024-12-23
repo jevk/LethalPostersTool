@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using LethalPostersCreator.Windows;
-
-namespace LethalPostersCreator
+﻿namespace LethalPostersCreator
 {
     public partial class MainWindow : Form
     {
@@ -22,8 +10,8 @@ namespace LethalPostersCreator
 
         private void tipsLauncher_Click(object sender, EventArgs e)
         {
-            Tips tips = new Tips(modPath);
-            tips.Show();
+            TipsCreator tipsCreator = new TipsCreator(modPath);
+            tipsCreator.Show();
         }
 
         private void postersLauncher_Click(object sender, EventArgs e)

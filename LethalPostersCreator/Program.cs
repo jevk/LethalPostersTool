@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace LethalPostersCreator
 {
     internal static class Program
