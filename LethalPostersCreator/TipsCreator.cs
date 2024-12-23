@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,14 @@ namespace LethalPostersCreator
         private string modPath = "";
         private string tipsPath = "";
         private List<ImageData> images = new();
-        private List<string> imagePaths = new();
         private List<string> imageNames = new();
         private int selectedImage = 0;
 
         public TipsCreator(string modPath)
         {
             this.modPath = modPath;
-            tipsPath = Path.Combine(modPath, "BepInEx/plugins/LethalPosters/tips");
+            tipsPath = Path.Combine(modPath, "BepInEx\\plugins\\LethalPosters\\tips");
+            Debug.WriteLine(tipsPath);
             InitializeComponent();
         }
 
@@ -69,6 +70,30 @@ namespace LethalPostersCreator
             return resultImage;
         }
 
+        private void UpdateImageList()
+        {
+            imgList.Items.Clear();
+            imgList.Items.AddRange(imageNames.ToArray());
+        }
+
+        private int HighestInDirectory(string path)
+        {
+            int result = 0;
+            foreach (string file in Directory.GetFiles(path))
+            {
+                string fileName = Path.GetFileName(file);
+                if (fileName.EndsWith(".png"))
+                {
+                    string number = fileName.Substring(0, fileName.Length - 4);
+                    if (int.TryParse(number, out int numberInt))
+                    {
+                        result = Math.Max(result, numberInt);
+                    }
+                }
+            }
+            return result;
+        }
+
         private void chooseFilesButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -82,9 +107,8 @@ namespace LethalPostersCreator
                 Image image = Image.FromFile(fileName);
                 images.Add(new ImageData(image));
                 pictureBox1.Image = CropToCanvas(images[0].image);
-                imgList.Items.Add(fileName);
                 imageNames.Add(Path.GetFileName(fileName));
-                imagePaths.Add(fileName);
+                UpdateImageList();
             }
         }
 
@@ -113,12 +137,14 @@ namespace LethalPostersCreator
 
         private void saveFilesButton_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < images.Count; i++)
+            int highest = HighestInDirectory(tipsPath);
+            foreach (ImageData imageData in images)
             {
-                ImageData image = images[i];
-                string fileName = imagePaths[i];
-                Image croppedImage = CropToCanvas(image.image, image.xOffsetPercentage, image.yOffsetPercentage, (int) numericUpDown3.Value);
-                croppedImage.Save(Path.Combine(tipsPath, i + ".png"));
+                highest++;
+                string fileName = highest.ToString() + ".png";
+                string filePath = Path.Combine(tipsPath, fileName);
+                Image croppedImage = CropToCanvas(imageData.image, imageData.xOffsetPercentage, imageData.yOffsetPercentage);
+                croppedImage.Save(filePath);
             }
         }
     }
