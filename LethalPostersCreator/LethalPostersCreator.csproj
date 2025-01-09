@@ -27,4 +27,8 @@
     <Folder Include="Windows\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ilmerge" Version="3.0.41" />
+  </ItemGroup>
+
 </Project>

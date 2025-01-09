@@ -14,19 +14,48 @@ namespace LethalPostersCreator
 {
     public partial class Poster : Form
     {
-        private string[] fileNames = new string[5] { "", "", "", "", "" };
-        private string[] imageNames = new string[5] { "", "", "", "", "" };
-        private string modPath = "";
-        private string posterPath = "";
+        private string[] fileNames = new string[] { "", "", "", "", "" };
+        private string[] imageNames = new string[] { "", "", "", "", "" };
+
+        private readonly Button[] imageShowers = new Button[5];
+        private readonly Button[] imagePickers = new Button[5];
+        private readonly Label[] imageLabels = new Label[5];
+        private readonly PictureBox[] imagePicBoxes = new PictureBox[5];
+        private readonly ComboBox[] comboBoxes = new ComboBox[5];
+
+        private readonly string modPath = "";
+        private readonly string posterPath = "";
 
         public Poster(string path = "")
         {
+            InitializeComponent();
+
+            imageShowers = new[] { showImg1, showImg2, showImg3, showImg4, showImg5 };
+            imagePickers = new[] { imgSingleSelect1, imgSingleSelect2, imgSingleSelect3, imgSingleSelect4, imgSingleSelect5 };
+            imageLabels = new[] { image1Name, image2Name, image3Name, image4Name, image5Name };
+            imagePicBoxes = new[] { topLeftPicBox, topMidPicBox, topRightPicBox, bottomLeftPicBox, bottomRightPicBox };
+            comboBoxes = new[] { topLeftCombobox, topMidCombobox, topRightCombobox, bottomLeftCombobox, bottomRightCombobox };
+
             modPath = path;
             posterPath = $"{modPath}\\BepInEx\\plugins\\LethalPosters\\posters\\";
-            InitializeComponent();
         }
 
-        private Image CropToFitCanvas(PictureBox pictureBox, Image img, double sizeMultiplier = 1.0)
+        private void ClearAllImages()
+        {
+            fileNames = ["", "", "", "", ""];
+            imageNames = ["", "", "", "", ""];
+
+            for (int i = 0; i < imageShowers.Length; i++)
+            {
+                imageShowers[i].Enabled = false;
+                comboBoxes[i].Items.Clear();
+                imageLabels[i].Text = "";
+                imagePicBoxes[i].Image = null;
+            }
+
+        }
+
+        private static Bitmap CropToFitCanvas(PictureBox pictureBox, Image img, double sizeMultiplier = 1.0)
         {
             // Calculate the scale factor to ensure the image completely covers the PictureBox
             double widthRatio = (double)img.Width / pictureBox.Width;
@@ -42,14 +71,14 @@ namespace LethalPostersCreator
             int cropY = (img.Height - cropHeight) / 2;
 
             // Define the crop rectangle
-            Rectangle cropRect = new Rectangle(cropX, cropY, cropWidth, cropHeight);
+            Rectangle cropRect = new(cropX, cropY, cropWidth, cropHeight);
 
             // Calculate the output size based on the multiplier
             int outputWidth = (int)(pictureBox.Width * sizeMultiplier);
             int outputHeight = (int)(pictureBox.Height * sizeMultiplier);
 
             // Create a bitmap with the scaled dimensions
-            Bitmap resultImage = new Bitmap(outputWidth, outputHeight);
+            Bitmap resultImage = new(outputWidth, outputHeight);
 
             using (Graphics g = Graphics.FromImage(resultImage))
             {
@@ -59,7 +88,7 @@ namespace LethalPostersCreator
 
             return resultImage;
         }
-        private int HighestNumberInDirectory(string directory)
+        private static int HighestNumberInDirectory(string directory)
         {
             int result = 0;
             string[] files = System.IO.Directory.GetFiles(directory);
@@ -88,7 +117,6 @@ namespace LethalPostersCreator
             {
                 highest = HighestNumberInDirectory(posterPath);
             }
-            var comboBoxes = new[] { topLeftCombobox, topMidCombobox, topRightCombobox, bottomLeftCombobox, bottomRightCombobox };
             for (int i = 0; i < comboBoxes.Length; i++)
             {
                 // Save the current canvas
@@ -134,7 +162,7 @@ namespace LethalPostersCreator
                 canvas.Save(posterPath + (highest + 1) + ".png");
             }
         }
-        private string SelectSingleImage()
+        private static string SelectSingleImage()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png;";
@@ -173,10 +201,6 @@ namespace LethalPostersCreator
             }
 
             // Display the selected images
-            var imageLabels = new[] { image1Name, image2Name, image3Name, image4Name, image5Name };
-            var imageShowers = new[] { showImg1, showImg2, showImg3, showImg4, showImg5 };
-            var imagePicBoxes = new[] { topLeftPicBox, topMidPicBox, topRightPicBox, bottomLeftPicBox, bottomRightPicBox };
-            var comboBoxes = new[] { topLeftCombobox, topMidCombobox, topRightCombobox, bottomLeftCombobox, bottomRightCombobox };
 
             for (int i = 0; i < imageNames.Length; i++)
             {
@@ -196,9 +220,6 @@ namespace LethalPostersCreator
 
         private void UpdateComboboxes()
         {
-            var imagePickers = new[] { imgSingleSelect1, imgSingleSelect2, imgSingleSelect3, imgSingleSelect4, imgSingleSelect5 };
-            var imageShowers = new[] { showImg1, showImg2, showImg3, showImg4, showImg5 };
-            var comboBoxes = new[] { topLeftCombobox, topMidCombobox, topRightCombobox, bottomLeftCombobox, bottomRightCombobox };
             string[] imageRange = new string[5];
             int loadedImages = 0;
 
@@ -365,6 +386,11 @@ namespace LethalPostersCreator
         private void button1_Click(object sender, EventArgs e)
         {
             SaveAllPositions();
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            ClearAllImages();
         }
     }
 }

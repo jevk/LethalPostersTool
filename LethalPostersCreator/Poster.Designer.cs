@@ -52,8 +52,9 @@
             bottomLeftCombobox = new ComboBox();
             bottomRightCombobox = new ComboBox();
             tableLayoutPanel1 = new TableLayoutPanel();
-            savePosterCanvasButton = new Button();
             button1 = new Button();
+            clearButton = new Button();
+            savePosterCanvasButton = new Button();
             tableLayoutPanel2 = new TableLayoutPanel();
             imgSingleSelect1 = new Button();
             imgSingleSelect2 = new Button();
@@ -82,9 +83,10 @@
             // 
             // selectFiles
             // 
-            selectFiles.Location = new Point(3, 3);
+            selectFiles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            selectFiles.Location = new Point(3, 50);
             selectFiles.Name = "selectFiles";
-            selectFiles.Size = new Size(157, 42);
+            selectFiles.Size = new Size(156, 41);
             selectFiles.TabIndex = 1;
             selectFiles.Text = "Select files...";
             selectFiles.UseVisualStyleBackColor = true;
@@ -295,40 +297,53 @@
             // 
             tableLayoutPanel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 49.096386F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50.903614F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 156F));
-            tableLayoutPanel1.Controls.Add(selectFiles, 0, 0);
-            tableLayoutPanel1.Controls.Add(savePosterCanvasButton, 2, 0);
-            tableLayoutPanel1.Controls.Add(button1, 1, 0);
-            tableLayoutPanel1.Location = new Point(12, 670);
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.Controls.Add(selectFiles, 0, 1);
+            tableLayoutPanel1.Controls.Add(button1, 1, 1);
+            tableLayoutPanel1.Controls.Add(clearButton, 1, 0);
+            tableLayoutPanel1.Controls.Add(savePosterCanvasButton, 2, 1);
+            tableLayoutPanel1.Location = new Point(12, 669);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(488, 48);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(488, 94);
             tableLayoutPanel1.TabIndex = 27;
-            // 
-            // savePosterCanvasButton
-            // 
-            savePosterCanvasButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            savePosterCanvasButton.Location = new Point(335, 3);
-            savePosterCanvasButton.Name = "savePosterCanvasButton";
-            savePosterCanvasButton.Size = new Size(150, 42);
-            savePosterCanvasButton.TabIndex = 2;
-            savePosterCanvasButton.Text = "Save Poster Canvas...";
-            savePosterCanvasButton.UseVisualStyleBackColor = true;
-            savePosterCanvasButton.Click += savePosterCanvasButton_Click;
             // 
             // button1
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            button1.Location = new Point(166, 3);
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            button1.Location = new Point(165, 50);
             button1.Name = "button1";
-            button1.Size = new Size(163, 42);
+            button1.Size = new Size(156, 41);
             button1.TabIndex = 3;
             button1.Text = "Save All Positions";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
+            // 
+            // clearButton
+            // 
+            clearButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            clearButton.Location = new Point(165, 3);
+            clearButton.Name = "clearButton";
+            clearButton.Size = new Size(156, 41);
+            clearButton.TabIndex = 4;
+            clearButton.Text = "Clear all images";
+            clearButton.UseVisualStyleBackColor = true;
+            clearButton.Click += clearButton_Click;
+            // 
+            // savePosterCanvasButton
+            // 
+            savePosterCanvasButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            savePosterCanvasButton.Location = new Point(327, 50);
+            savePosterCanvasButton.Name = "savePosterCanvasButton";
+            savePosterCanvasButton.Size = new Size(158, 41);
+            savePosterCanvasButton.TabIndex = 2;
+            savePosterCanvasButton.Text = "Save Poster Canvas...";
+            savePosterCanvasButton.UseVisualStyleBackColor = true;
+            savePosterCanvasButton.Click += savePosterCanvasButton_Click;
             // 
             // tableLayoutPanel2
             // 
@@ -423,7 +438,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(512, 730);
+            ClientSize = new Size(512, 775);
             Controls.Add(tableLayoutPanel2);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(bottomRightCombobox);
@@ -487,5 +502,6 @@
         private Button imgSingleSelect4;
         private Button imgSingleSelect5;
         private Button button1;
+        private Button clearButton;
     }
 }
